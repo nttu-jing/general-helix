@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Helix × Lancret's Theorem</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:#10131a;color:#f1f3f5;line-height:1.8}
+.container{max-width:1050px;margin:auto;padding:28px 20px 60px}
+header{padding:30px 0 20px;border-bottom:1px solid #303642}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 8px}
+h2{margin-top:0;font-size:25px}
+h3{font-size:19px}
+.lead{color:#b9c0cc;font-size:17px}
+.card{background:#181d26;border:1px solid #303642;border-radius:18px;padding:25px;margin-top:22px}
+.number{color:#8ab4f8;font-weight:bold}
+.formula{background:#0c0f14;border-radius:12px;padding:16px;text-align:center;font-size:21px;margin:16px 0;overflow:auto}
+.note{background:#202733;border-left:4px solid #8ab4f8;padding:12px 16px;border-radius:8px}
+.demo{display:grid;grid-template-columns:1fr 280px;gap:20px}
+canvas{width:100%;height:500px;background:#080b10;border-radius:14px;border:1px solid #303642;display:block}
+.controls{background:#10151d;border-radius:14px;padding:18px}
+label{display:block;margin:15px 0 6px}
+input[type=range]{width:100%}
+.value{float:right;color:#8ab4f8}
+button{width:100%;padding:11px;border:0;border-radius:9px;background:#8ab4f8;color:#07101d;font-weight:bold;cursor:pointer;margin-top:12px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.metric{background:#181d26;padding:12px;border-radius:10px}
+.metric b{display:block;font-size:20px;color:#fff}
+.small{font-size:14px;color:#aeb6c4}
+ul{padding-left:22px}
+@media(max-width:800px){.demo{grid-template-columns:1fr}canvas{height:400px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>General Helix × Lancret's Theorem</h1>
+<p class="lead">一條空間曲線，看起來只是「邊轉邊前進」；但如果它的切向量始終與某個固定方向保持相同角度，這件事竟然可以用曲率 κ 與扭率 τ 的比值來判斷。</p>
+</header>
+
+<section class="card">
+<h2><span class="number">①</span> 製作動機</h2>
+<p>在生活中，有些物體的形狀具有「旋轉＋前進」的特徵，例如彈簧、螺絲的螺紋、螺旋樓梯等。從幾何的角度來看，我們可以問：</p>
+<p><strong>一條三維空間曲線，如果一直沿著某個固定方向前進，同時又持續旋轉，它具有什麼特殊的數學性質？</strong></p>
+<p>因此，本作品選擇課堂中的 <strong>General Helix（一般螺旋線）</strong>與 <strong>Lancret's Theorem</strong>，利用曲率、扭率以及 Frenet TNB frame 來觀察這個幾何現象。</p>
+</section>
+
+<section class="card">
+<h2><span class="number">②</span> 幾何問題：什麼叫 General Helix？</h2>
+<p>設 α(s) 是以弧長 s 為參數的正則曲線。如果存在一個固定的單位向量 <strong>u</strong>，使得切向量 T(s) 與 u 的夾角 θ 永遠保持不變：</p>
+<div class="formula">⟨T(s), u⟩ = cos θ = constant</div>
+<p>那麼這條曲線就稱為 <strong>General Helix</strong>。</p>
+<p>也就是說，雖然曲線本身在三維空間中不斷改變方向，但它的切向量始終和某個固定方向保持相同的角度。</p>
+</section>
+
+<section class="card">
+<h2><span class="number">③</span> 核心定理：Lancret's Theorem</h2>
+<div class="formula">General Helix ⇔ τ / κ = constant</div>
+<p>這就是本作品最重要的幾何結論：</p>
+<ul>
+<li><strong>κ（curvature，曲率）</strong>描述曲線彎曲的程度。</li>
+<li><strong>τ（torsion，扭率）</strong>描述曲線離開原本密切平面的扭轉程度。</li>
+<li>如果 τ/κ 是常數，那麼曲線就是 General Helix。</li>
+</ul>
+<div class="note">本課程筆記採用 Frenet–Serret 公式 B′ = τN，因此扭率的正負號依照課堂所使用的方向約定。</div>
+</section>
+
+<section class="card">
+<h2><span class="number">④</span> 為什麼會出現 τ / κ？</h2>
+<p>由 General Helix 的定義：</p>
+<div class="formula">⟨T, u⟩ = cos θ</div>
+<p>因為 θ 與 u 都是固定的，所以對弧長 s 微分：</p>
+<div class="formula">⟨T′, u⟩ = 0</div>
+<p>利用 Frenet 公式 T′ = κN，可得：</p>
+<div class="formula">κ⟨N,u⟩ = 0</div>
+<p>當 κ &gt; 0 時，表示 u 位於由 T、B 所張成的 rectifying plane 中，因此可以寫成：</p>
+<div class="formula">u = cosθ T + cB</div>
+<p>其中 c = ±sinθ。再利用 u′ = 0 與 B′ = τN，可得：</p>
+<div class="formula">κ cosθ + cτ = 0</div>
+<p>因此 τ/κ 為常數。這正是 Lancret's Theorem 中「General Helix ⇒ τ/κ constant」的核心想法。</p>
+</section>
+
+<section class="card">
+<h2><span class="number">⑤</span> 課堂中的 TNB 公式</h2>
+<p>General Helix 的判斷與 Frenet frame 密切相關。課堂使用的三個 Frenet–Serret 公式為：</p>
+<div class="formula">
+T′ = κN<br><br>
+N′ = −κT − τB<br><br>
+B′ = τN
+</div>
+<p>其中 T 是切向量、N 是主法向量、B 是副法向量。曲率 κ 控制 T 的改變，而扭率 τ 則反映曲線在三維空間中的扭轉。</p>
+</section>
+
+<section class="card">
+<h2><span class="number">⑥</span> 具體例子：Circular Helix</h2>
+<p>取課堂中的圓螺旋線：</p>
+<div class="formula">α(t) = (a cos t, a sin t, bt)</div>
+<p>其中 a 控制圓周方向的大小，b 控制沿 z 軸前進的速度。</p>
+<p>課堂筆記給出的結果為：</p>
+<div class="formula">
+κ = a / (a² + b²)<br><br>
+τ = −b / (a² + b²)
+</div>
+<p>因此：</p>
+<div class="formula">τ / κ = −b / a</div>
+<p>只要 a、b 固定，τ/κ 就是常數，所以 Circular Helix 符合 General Helix 的條件。</p>
+</section>
+
+<section class="card">
+<h2><span class="number">⑦</span> 互動展示：觀察 General Helix</h2>
+<p>拖曳下方參數，可以直接觀察圓螺旋線、TNB frame，以及 κ、τ 和 τ/κ 如何變化。也可以拖曳黑色畫布來旋轉觀看角度。</p>
+
+<div class="demo">
+<div>
+<canvas id="canvas" width="900" height="500"></canvas>
+</div>
+<div class="controls">
+<label>a <span class="value" id="av">2.0</span></label>
+<input id="a" type="range" min="0.5" max="4" step="0.1" value="2">
+
+<label>b <span class="value" id="bv">1.0</span></label>
+<input id="b" type="range" min="0" max="4" step="0.1" value="1">
+
+<button id="reset">重設</button>
+<button id="pause">暫停旋轉</button>
+
+<div class="metrics">
+<div class="metric">κ <b id="kappa">—</b></div>
+<div class="metric">τ <b id="tau">—</b></div>
+<div class="metric">τ/κ <b id="ratio">—</b></div>
+<div class="metric">θ <b id="theta">—</b></div>
+</div>
+<p class="small">黃色箭頭是固定方向 u。紅、綠、藍分別表示 T、N、B。</p>
+</div>
+</div>
+</section>
+
+</div>
+
+<script>
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+const aSlider=document.getElementById("a");
+const bSlider=document.getElementById("b");
+const av=document.getElementById("av");
+const bv=document.getElementById("bv");
+const kappaEl=document.getElementById("kappa");
+const tauEl=document.getElementById("tau");
+const ratioEl=document.getElementById("ratio");
+const thetaEl=document.getElementById("theta");
+let rotY=-0.65, rotX=0.25, dragging=false, lastX=0,lastY=0, paused=false;
+
+function project(p){
+  let [x,y,z]=p;
+  const cy=Math.cos(rotY),sy=Math.sin(rotY);
+  const cx=Math.cos(rotX),sx=Math.sin(rotX);
+  let x1=x*cy-z*sy, z1=x*sy+z*cy;
+  let y1=y*cx-z1*sx, z2=y1*sx+z1*cx;
+  const scale=70/(1+z2*0.035);
+  return [canvas.width/2+x1*scale, canvas.height/2-y1*scale];
+}
+function helix(t,a,b){return [a*Math.cos(t),a*Math.sin(t),b*t]}
+function norm(v){let d=Math.hypot(...v);return v.map(x=>x/d)}
+function drawLine(points){
+  ctx.beginPath();
+  points.forEach((p,i)=>{const q=project(p); if(i===0)ctx.moveTo(...q);else ctx.lineTo(...q)});
+  ctx.stroke();
+}
+function render(){
+  const a=+aSlider.value,b=+bSlider.value;
+  av.textContent=a.toFixed(1);bv.textContent=b.toFixed(1);
+  const k=a/(a*a+b*b);
+  const tau=-b/(a*a+b*b);
+  const ratio=-b/a;
+  const theta=Math.atan2(Math.abs(b),a)*180/Math.PI;
+  kappaEl.textContent=k.toFixed(4);
+  tauEl.textContent=tau.toFixed(4);
+  ratioEl.textContent=ratio.toFixed(4);
+  thetaEl.textContent=theta.toFixed(2)+"°";
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#080b10";ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // grid/axis
+  ctx.strokeStyle="#252c38";ctx.lineWidth=1;
+  for(let z=-6;z<=6;z+=2){
+    drawLine([[-4,-2,z],[4,-2,z]]);
+  }
+  ctx.strokeStyle="#ffffff";ctx.lineWidth=3;
+  const pts=[];
+  for(let t=-6;t<=6;t+=0.035)pts.push(helix(t,a,b));
+  drawLine(pts);
+
+  const t0=0.8;
+  const p=helix(t0,a,b);
+  const T=norm([-a*Math.sin(t0),a*Math.cos(t0),b]);
+  const N=[-Math.cos(t0),-Math.sin(t0),0];
+  const B=norm([
+    T[1]*N[2]-T[2]*N[1],
+    T[2]*N[0]-T[0]*N[2],
+    T[0]*N[1]-T[1]*N[0]
+  ]);
+
+  function vec(v,len,label){
+    const q=project(p.map((x,i)=>x+v[i]*len));
+    const s=project(p);
+    ctx.beginPath();ctx.moveTo(...s);ctx.lineTo(...q);ctx.stroke();
+    ctx.fillStyle=ctx.strokeStyle;ctx.font="bold 16px Arial";ctx.fillText(label,q[0]+7,q[1]-7);
+  }
+  ctx.lineWidth=4;
+  ctx.strokeStyle="#ff5f56";vec(T,1.25,"T");
+  ctx.strokeStyle="#52d273";vec(N,1.25,"N");
+  ctx.strokeStyle="#4da3ff";vec(B,1.25,"B");
+
+  const u=norm([0,0,1]);
+  ctx.strokeStyle="#ffd84d";ctx.lineWidth=4;vec(u,1.8,"u");
+
+  const sp=project(p);
+  ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(sp[0],sp[1],5,0,Math.PI*2);ctx.fill();
+
+  if(!paused){rotY+=0.006;}
+  requestAnimationFrame(render);
+}
+canvas.addEventListener("pointerdown",e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener("pointermove",e=>{
+  if(!dragging)return;
+  rotY+=(e.clientX-lastX)*0.008;
+  rotX+=(e.clientY-lastY)*0.008;
+  rotX=Math.max(-1.3,Math.min(1.3,rotX));
+  lastX=e.clientX;lastY=e.clientY;
+});
+canvas.addEventListener("pointerup",()=>dragging=false);
+document.getElementById("reset").onclick=()=>{aSlider.value=2;bSlider.value=1;rotY=-0.65;rotX=0.25};
+document.getElementById("pause").onclick=e=>{paused=!paused;e.target.textContent=paused?"繼續旋轉":"暫停旋轉"};
+aSlider.oninput=bSlider.oninput=()=>{};
+render();
+</script>
+</body>
+</html>
